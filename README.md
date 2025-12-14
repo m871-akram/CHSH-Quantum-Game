@@ -36,12 +36,6 @@ pip install qiskit qiskit-aer numpy
    - Calculate and display the overall success probability.
    - Indicate whether the quantum advantage (probability > 0.75) is achieved.
 
-## Code Structure
-- **chsh_quantum.py**: The main script containing the CHSH game simulation.
-  - `creer_circuit_chsh(x, y)`: Function to create the quantum circuit for given inputs x and y.
-  - Simulation loop: Executes the circuit for each input pair, collects results, and computes the success probability.
-  - Output: Prints measurement counts, success probability, and quantum advantage status.
-
 ## Results
 The simulation typically yields a success probability of approximately 0.85, surpassing the classical limit of 0.75. This demonstrates the power of quantum entanglement in achieving outcomes unattainable by classical strategies.
 
