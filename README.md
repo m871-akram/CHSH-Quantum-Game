@@ -1,6 +1,6 @@
 # CHSH Quantum Game Simulation
 
-This project implements a quantum simulation of the CHSH (Clauser-Horne-Shimony-Holt) game using Qiskit, a Python-based quantum computing framework. The CHSH game is a well-known demonstration of quantum entanglement and Bell's theorem, showcasing the advantage of quantum strategies over classical ones. The simulation creates a quantum circuit to prepare an entangled Bell state, applies measurement settings for Alice and Bob, and evaluates the probability of winning the game based on predefined conditions.
+A quantum simulation of the CHSH (Clauser-Horne-Shimony-Holt) game using Qiskit, a Python-based quantum computing framework. The CHSH game is a well-known demonstration of quantum entanglement and Bell's theorem, showcasing the advantage of quantum strategies over classical ones. The simulation creates a quantum circuit to prepare an entangled Bell state, applies measurement settings for Alice and Bob, and evaluates the probability of winning the game based on predefined conditions.
 
 The code simulates the game for different input pairs (x, y) and calculates the success probability, comparing it to the classical limit of 0.75 to demonstrate the quantum advantage (achieving a success probability up to approximately 0.85) :
 
@@ -8,15 +8,6 @@ The code simulates the game for different input pairs (x, y) and calculates the 
 - **Quantum Circuit Construction**: Builds a quantum circuit with two qubits to create an entangled Bell state using Hadamard and CNOT gates.
 - **Measurement Settings**: Applies specific rotations (Ry gates) to Alice's and Bob's qubits based on input values (x, y).
 - **Simulation**: Uses Qiskit's AerSimulator to run the quantum circuit with 100,000 shots for statistical accuracy.
-- **Result Analysis**: Evaluates measurement outcomes against the CHSH game's winning conditions and computes the overall success probability.
-- **Quantum Advantage Check**: Compares the success probability to the classical limit (0.75) to verify the quantum advantage.
-
-
-To run this project, you need the following:
-- Python 3.8 or higher
-- Qiskit (`qiskit`)
-- Qiskit Aer (`qiskit-aer`)
-- NumPy (`numpy`)
 
 Install the required packages using pip:
 ```bash
