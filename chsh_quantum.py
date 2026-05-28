@@ -7,12 +7,12 @@ def circuit_chsh(x, y):
     qc = QuantumCircuit(2, 2)
     qc.h(0)              # état de Bell
     qc.cx(0, 1)
-    if x == 0:
-        qc.ry(pi / 4, 0)      # Alice: 45°
+    if x == 1:
+        qc.ry(pi / 2, 0)      # Alice: x=0 -> 0, x=1 -> 90°
     if y == 0:
-        qc.ry(pi / 8, 1)      # Bob: 22.5°
-    elif y == 1:
-        qc.ry(3 * pi / 8, 1)  # Bob: 67.5°
+        qc.ry(pi / 4, 1)      # Bob: y=0 -> 45°
+    else:
+        qc.ry(-pi / 4, 1)     # Bob: y=1 -> -45°
     qc.measure([0, 1], [0, 1])
     return qc
 

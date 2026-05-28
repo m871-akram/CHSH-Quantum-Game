@@ -38,7 +38,7 @@ pip install qiskit numpy
 python chsh_quantum.py
 ```
 
-The simulation reaches a success probability of about **0.80**, comfortably above the classical limit of 0.75 — entanglement gives a measurable edge. With optimal measurement angles the quantum strategy can reach ≈ 0.853; the angles used here trade a little of that headroom for simplicity.
+The simulation reaches a success probability of about **0.85** (cos²(π/8) ≈ 0.853), comfortably above the classical limit of 0.75 — this is the Tsirelson bound, the maximum any quantum strategy can achieve. Entanglement gives a decisive, provable edge.
 
 ## Limitations
 
