@@ -1,36 +1,47 @@
-# CHSH Quantum Game Simulation
+# CHSH Quantum Game
 
-A quantum simulation of the CHSH (Clauser-Horne-Shimony-Holt) game using Qiskit, a Python-based quantum computing framework. The CHSH game is a well-known demonstration of quantum entanglement and Bell's theorem, showcasing the advantage of quantum strategies over classical ones. The simulation creates a quantum circuit to prepare an entangled Bell state, applies measurement settings for Alice and Bob, and evaluates the probability of winning the game based on predefined conditions.
+A small simulation of the **CHSH game** (Clauser–Horne–Shimony–Holt) built with [Qiskit](https://www.qiskit.org/). The CHSH game is a classic demonstration of quantum entanglement and Bell's theorem: two players who share an entangled pair can win more often than any classical strategy allows.
 
-The code simulates the game for different input pairs (x, y) and calculates the success probability, comparing it to the classical limit of 0.75 to demonstrate the quantum advantage (achieving a success probability up to approximately 0.85) :
+This project builds the quantum circuit, plays the game for every input pair, and measures the success probability — showing that it beats the classical ceiling of **0.75**.
 
+## The game
 
-- **Quantum Circuit Construction**: Builds a quantum circuit with two qubits to create an entangled Bell state using Hadamard and CNOT gates.
-- **Measurement Settings**: Applies specific rotations (Ry gates) to Alice's and Bob's qubits based on input values (x, y).
-- **Simulation**: Uses Qiskit's AerSimulator to run the quantum circuit with 100,000 shots for statistical accuracy.
+Two players, Alice and Bob, are placed in separate rooms and can't communicate. A referee sends each of them a random bit:
 
-Install the required packages using pip:
-```bash
-pip install qiskit qiskit-aer numpy
+- Alice receives `x ∈ {0, 1}`
+- Bob receives `y ∈ {0, 1}`
+
+Each replies with a bit (`a` for Alice, `b` for Bob). They **win** the round when:
+
+```
+a ⊕ b = x · y
 ```
 
-## Usage
+In words: their answers must be **equal** unless both inputs are `1`, in which case the answers must **differ**.
 
-1. Run the script:
-   ```bash
-   python chsh_quantum.py
-   ```
+| Limit | Best win probability |
+|-------|----------------------|
+| Best classical strategy | 0.75 |
+| Quantum strategy (theoretical max) | ≈ 0.853 |
 
-2. The script will:
-   - Simulate the CHSH game for input pairs (x, y) = (0,0), (0,1), (1,0), (1,1).
-   - Output the measurement counts for each input pair.
-   - Calculate and display the overall success probability.
-   - Indicate whether the quantum advantage (probability > 0.75) is achieved.
+## How the quantum strategy works
 
-## Results
-The simulation typically yields a success probability of approximately 0.85, surpassing the classical limit of 0.75. This demonstrates the power of quantum entanglement in achieving outcomes unattainable by classical strategies.
+1. **Entanglement** — a Bell state is prepared on two qubits with a Hadamard gate followed by a CNOT.
+2. **Measurement settings** — depending on their input, Alice and Bob rotate their qubit (`Ry` gates) before measuring. The angles are chosen so that correlated measurements line up with the winning condition.
+3. **Simulation** — the circuit is run for each input pair `(x, y)` with 100,000 shots, and the wins are counted.
+
+```bash
+pip install qiskit numpy
+```
+
+```bash
+python chsh_quantum.py
+```
+
+The simulation reaches a success probability of about **0.80**, comfortably above the classical limit of 0.75 — entanglement gives a measurable edge. With optimal measurement angles the quantum strategy can reach ≈ 0.853; the angles used here trade a little of that headroom for simplicity.
 
 ## Limitations
-- The simulation assumes ideal quantum conditions (no noise or decoherence).
-- The number of shots (100,000) is set for high statistical accuracy but can be adjusted for faster execution at the cost of precision.
-- The code uses Qiskit's AerSimulator, which is suitable for small-scale simulations but may not reflect real quantum hardware behavior.
+
+- Assumes ideal quantum conditions — no noise or decoherence.
+- `BasicSimulator` is fine for this two-qubit circuit but is not a model of real quantum hardware.
+- 100,000 shots are used for statistical accuracy; lowering this speeds up the run at the cost of precision.
