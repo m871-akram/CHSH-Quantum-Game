@@ -17,21 +17,33 @@ def circuit_chsh(x, y):
     return qc
 
 
-sim = BasicSimulator()
-shots = 100000
-entrees = [(0, 0), (0, 1), (1, 0), (1, 1)]
+def main():
+    sim = BasicSimulator()
+    shots = 100000
+    entrees = [(0, 0), (0, 1), (1, 0), (1, 1)]
 
-succes = total = 0
-for x, y in entrees:
-    counts = sim.run(circuit_chsh(x, y), shots=shots).result().get_counts()
-    print(f"x={x}, y={y}: {counts}")
-    for bits, n in counts.items():
-        a, b = int(bits[1]), int(bits[0])  # bits[0]=Bob, bits[1]=Alice
-        gagne = (a != b) if (x, y) == (1, 1) else (a == b)  # règle: a XOR b == x*y
-        if gagne:
-            succes += n
-        total += n
+    succes = 0
+    resultats = []
+    for x, y in entrees:
+        counts = sim.run(circuit_chsh(x, y), shots=shots).result().get_counts()
+        print(f"x={x}, y={y}: {counts}")
+        gains = 0
+        for bits, n in counts.items():
+            a, b = int(bits[1]), int(bits[0])  # bits[0]=Bob, bits[1]=Alice
+            gagne = (a != b) if (x, y) == (1, 1) else (a == b)  # règle: a XOR b == x*y
+            if gagne:
+                gains += n
+        resultats.append((x, y, gains / shots))
+        succes += gains
 
-p = succes / total
-print(f"Probabilité de succès : {p:.2f}")
-print("Avantage quantique !" if p > 0.75 else "Pas d'avantage quantique.")
+    print("\n x y | P(gain)")
+    for x, y, pg in resultats:
+        print(f" {x} {y} | {pg:.4f}")
+
+    p = succes / (len(entrees) * shots)
+    print(f"\nProbabilité de succès : {p:.4f}  (théorie cos²(π/8) ≈ 0.8536, classique ≤ 0.75)")
+    print("Avantage quantique !" if p > 0.75 else "Pas d'avantage quantique.")
+
+
+if __name__ == "__main__":
+    main()
