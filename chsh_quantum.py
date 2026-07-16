@@ -14,6 +14,7 @@ def circuit_chsh(x, y):
     else:
         qc.ry(-pi / 4, 1)     # Bob: y=1 -> -45°
     qc.measure([0, 1], [0, 1])
+    print(qc.draw()) 
     return qc
 
 
@@ -42,7 +43,6 @@ def main():
 
     p = succes / (len(entrees) * shots)
     print(f"\nProbabilité de succès : {p:.4f}  (théorie cos²(π/8) ≈ 0.8536, classique ≤ 0.75)")
-    print("Avantage quantique !" if p > 0.75 else "Pas d'avantage quantique.")
 
 
 if __name__ == "__main__":
